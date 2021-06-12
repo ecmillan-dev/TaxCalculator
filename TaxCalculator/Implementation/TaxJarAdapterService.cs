@@ -108,7 +108,7 @@ namespace TaxCalculator.Implementation
         /// </summary>
         /// <param name="order">the posted order model with related search information</param>
         /// <returns>The order tax information</returns>
-        public async Task<OrderTaxInformation> CalculateTaxesForOrder(OrderInformation order)
+        public async Task<float> CalculateTaxesForOrder(OrderInformation order)
         {
             //OrderTaxInfromationWrapper
             try
@@ -137,7 +137,7 @@ namespace TaxCalculator.Implementation
                         // parse the return if successful
                         var sResponse = await response.Content.ReadAsStringAsync();
                         var result = JsonConvert.DeserializeObject<OrderTaxInfromationWrapper>(sResponse);
-                        return result.tax;
+                        return result.tax.amount_to_collect;
                     }
                 }
             }

@@ -67,7 +67,7 @@ namespace TaxCalculator.Controllers
         /// <param name="order">the posted order model with related search information</param>
         /// <returns>The order tax information</returns>
         [HttpPost("CalculateTaxesForOrder")]
-        public async Task<ActionResult<OrderTaxInformation>> CalculateTaxesForOrder([FromBody] OrderInformation order)
+        public async Task<ActionResult<float>> CalculateTaxesForOrder([FromBody] OrderInformation order)
         {
             try
             {

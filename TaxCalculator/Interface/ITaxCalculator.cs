@@ -23,6 +23,6 @@ namespace TaxCalculator.Interface
         /// </summary>
         /// <param name="order">the posted order model with related search information</param>
         /// <returns>The order tax information</returns>
-        Task<OrderTaxInformation> CalculateTaxesForOrder(OrderInformation order);
+        Task<float> CalculateTaxesForOrder(OrderInformation order);
     }
 }
