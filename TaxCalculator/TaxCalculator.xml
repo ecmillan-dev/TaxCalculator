@@ -4,30 +4,35 @@
         <name>TaxCalculator</name>
     </assembly>
     <members>
-        <member name="F:TaxCalculator.Controllers.TaxJarAdapterController._taxJarService">
+        <member name="F:TaxCalculator.Controllers.TaxServiceController._taxService">
             <summary>
             Service for the Tax Jar API methods
             </summary>
         </member>
-        <member name="M:TaxCalculator.Controllers.TaxJarAdapterController.#ctor(TaxCalculator.Interface.ITaxJarAdapter)">
+        <member name="M:TaxCalculator.Controllers.TaxServiceController.#ctor(TaxCalculator.Interface.ITaxService)">
             <summary>
             Constructor to bind the tax jar service
             </summary>
             <param name="taxJarService"></param>
         </member>
-        <member name="M:TaxCalculator.Controllers.TaxJarAdapterController.GetTaxRateForLocation(System.String)">
+        <member name="M:TaxCalculator.Controllers.TaxServiceController.GetTaxRateForLocation(System.String)">
             <summary>
             Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
             </summary>
             <param name="zip">the zip code (5 or 9 digits)</param>
-            <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
+            <returns>The tax rates  for that location</returns>
         </member>
-        <member name="M:TaxCalculator.Controllers.TaxJarAdapterController.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
+        <member name="M:TaxCalculator.Controllers.TaxServiceController.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
             <summary>
-            Retrieves the taxes for a specific order from the Tax Jar API
+            Retrieves the taxes for a specific order from a Tax Calculator
             </summary>
             <param name="order">the posted order model with related search information</param>
             <returns>The order tax information</returns>
+        </member>
+        <member name="T:TaxCalculator.Implementation.TaxJarAdapterService">
+            <summary>
+            A service implementation of the Tax Jar version of a Tax Calculator
+            </summary>
         </member>
         <member name="F:TaxCalculator.Implementation.TaxJarAdapterService._configuration">
             <summary>
@@ -69,21 +74,64 @@
             <param name="order">the posted order model with related search information</param>
             <returns>The order tax information</returns>
         </member>
-        <member name="T:TaxCalculator.Interface.ITaxJarAdapter">
+        <member name="F:TaxCalculator.Implementation.TaxService._taxCalculator">
             <summary>
-            Interface for the Tax Jar API 
+            An instance of a Tax Calculator
             </summary>
         </member>
-        <member name="M:TaxCalculator.Interface.ITaxJarAdapter.GetTaxRateForLocation(System.String)">
+        <member name="F:TaxCalculator.Implementation.TaxService._logger">
+            <summary>
+            Logging via NLog
+            </summary>
+        </member>
+        <member name="M:TaxCalculator.Implementation.TaxService.GetTaxRateForLocation(System.String)">
             <summary>
             Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
             </summary>
             <param name="zip">the zip code (5 or 9 digits)</param>
             <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
         </member>
-        <member name="M:TaxCalculator.Interface.ITaxJarAdapter.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
+        <member name="M:TaxCalculator.Implementation.TaxService.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
             <summary>
             Retrieves the taxes for a specific order from the Tax Jar API
+            </summary>
+            <param name="order">the posted order model with related search information</param>
+            <returns>The order tax information</returns>
+        </member>
+        <member name="T:TaxCalculator.Interface.ITaxCalculator">
+            <summary>
+            Interface for a Tax Calculator
+            </summary>
+        </member>
+        <member name="M:TaxCalculator.Interface.ITaxCalculator.GetTaxRateForLocation(System.String)">
+            <summary>
+            Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
+            </summary>
+            <param name="zip">the zip code (5 or 9 digits)</param>
+            <returns>The tax rates for that location</returns>
+        </member>
+        <member name="M:TaxCalculator.Interface.ITaxCalculator.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
+            <summary>
+            Retrieves the taxes for a specific order 
+            </summary>
+            <param name="order">the posted order model with related search information</param>
+            <returns>The order tax information</returns>
+        </member>
+        <member name="T:TaxCalculator.Interface.ITaxService">
+            <summary>
+            Service for tax calculation methods
+            </summary>
+        </member>
+        <member name="M:TaxCalculator.Interface.ITaxService.GetTaxRateForLocation(System.String)">
+            <summary>
+            Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
+            </summary>
+            <param name="zip">the zip code (5 or 9 digits)</param>
+            <returns>The tax rates for that location</returns>
+        </member>
+        <member name="M:TaxCalculator.Interface.ITaxService.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
+            <summary>
+            Retrieves the taxes for a specific order 
             </summary>
             <param name="order">the posted order model with related search information</param>
             <returns>The order tax information</returns>

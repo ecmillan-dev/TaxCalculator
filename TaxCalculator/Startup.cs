@@ -36,7 +36,8 @@ namespace TaxCalculator
             });
 
             // bind interfaces to services
-            services.AddScoped<ITaxJarAdapter, TaxJarAdapterService>();
+            services.AddScoped<ITaxCalculator, TaxJarAdapterService>();
+            services.AddScoped<ITaxService, TaxService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

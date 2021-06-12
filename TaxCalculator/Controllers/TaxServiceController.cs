@@ -12,21 +12,21 @@ namespace TaxCalculator.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaxJarAdapterController : ControllerBase
+    public class TaxServiceController : ControllerBase
     {
         #region members/constructor
         /// <summary>
         /// Service for the Tax Jar API methods
         /// </summary>
-        private ITaxJarAdapter _taxJarService;
+        private ITaxService _taxService;
 
         /// <summary>
         /// Constructor to bind the tax jar service
         /// </summary>
         /// <param name="taxJarService"></param>
-        public TaxJarAdapterController (ITaxJarAdapter taxJarService)
+        public TaxServiceController (ITaxService taxService)
         {
-            _taxJarService = taxJarService;
+            _taxService = taxService;
         }
         #endregion
 
@@ -34,7 +34,7 @@ namespace TaxCalculator.Controllers
         /// Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
         /// </summary>
         /// <param name="zip">the zip code (5 or 9 digits)</param>
-        /// <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
+        /// <returns>The tax rates  for that location</returns>
         [HttpGet("GetTaxRateForLocation/{zip}")]
         public async Task<ActionResult<GeneralTaxRate>> GetTaxRateForLocation(string zip)
         {
@@ -43,7 +43,7 @@ namespace TaxCalculator.Controllers
                 // validate the zip code
                 if (Regex.IsMatch(zip, @"^[0-9]{5}(?:-[0-9]{4})?$"))
                 {
-                    return Ok(await _taxJarService.GetTaxRateForLocation(zip));
+                    return Ok(await _taxService.GetTaxRateForLocation(zip));
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace TaxCalculator.Controllers
         }
 
         /// <summary>
-        /// Retrieves the taxes for a specific order from the Tax Jar API
+        /// Retrieves the taxes for a specific order from a Tax Calculator
         /// </summary>
         /// <param name="order">the posted order model with related search information</param>
         /// <returns>The order tax information</returns>
@@ -71,7 +71,7 @@ namespace TaxCalculator.Controllers
         {
             try
             {
-                return Ok(await _taxJarService.CalculateTaxesForOrder(order));
+                return Ok(await _taxService.CalculateTaxesForOrder(order));
             }
 
             catch (Exception ex)

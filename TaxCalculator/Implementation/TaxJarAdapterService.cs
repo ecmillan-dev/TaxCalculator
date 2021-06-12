@@ -12,7 +12,10 @@ using TaxCalculator.Models;
 
 namespace TaxCalculator.Implementation
 {
-    public class TaxJarAdapterService : ITaxJarAdapter
+    /// <summary>
+    /// A service implementation of the Tax Jar version of a Tax Calculator
+    /// </summary>
+    public class TaxJarAdapterService : ITaxCalculator
     {
         #region private members and constructor
         /// <summary>
@@ -84,7 +87,7 @@ namespace TaxCalculator.Implementation
             catch (HttpRequestException ex)
             {
                 // log exception
-                _logger.LogError("HttpRequestException in GetTaxRateForLocation - " + ex.Message);
+                _logger.LogError("HttpRequestException in TaxJarAdapterService.GetTaxRateForLocation - " + ex.Message);
 
                 // return simple exception
                 throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
@@ -93,7 +96,7 @@ namespace TaxCalculator.Implementation
             catch (Exception ex)
             {
                 // log exception
-                _logger.LogError("General Exception in GetTaxRateForLocation - " + ex.Message);
+                _logger.LogError("General Exception in TaxJarAdapterService.GetTaxRateForLocation - " + ex.Message);
 
                 // return simple exception
                 throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
@@ -141,7 +144,7 @@ namespace TaxCalculator.Implementation
             catch (HttpRequestException ex)
             {
                 // log exception
-                _logger.LogError("HttpRequestException in CalculateTaxesForOrder - " + ex.Message);
+                _logger.LogError("HttpRequestException in TaxJarAdapterService.CalculateTaxesForOrder - " + ex.Message);
 
                 // return simple exception
                 throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
@@ -150,7 +153,7 @@ namespace TaxCalculator.Implementation
             catch (Exception ex)
             {
                 // log exception
-                _logger.LogError("General Exception in CalculateTaxesForOrder - " + ex.Message);
+                _logger.LogError("General Exception in TaxJarAdapterService.CalculateTaxesForOrder - " + ex.Message);
 
                 // return simple exception
                 throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
