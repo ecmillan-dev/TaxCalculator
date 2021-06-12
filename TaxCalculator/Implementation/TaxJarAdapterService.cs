@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,18 @@ namespace TaxCalculator.Implementation
         private string _authToken { get; set; }
 
         /// <summary>
+        /// Logging via NLog
+        /// </summary>
+        private readonly ILogger<TaxJarAdapterService> _logger;
+
+        /// <summary>
         /// Bind the configuration and intialize API variables
         /// </summary>
         /// <param name="configuration"></param>
-        public TaxJarAdapterService(IConfiguration configuration)
+        public TaxJarAdapterService(IConfiguration configuration, ILogger<TaxJarAdapterService> logger)
         {
             _configuration = configuration;
+            _logger = logger;
             // set the api vars
             _apiBaseUrl = _configuration.GetSection("TaxJarApi").GetValue<string>("BaseUrl");
             _authToken = _configuration.GetSection("TaxJarApi").GetValue<string>("ApiKey");            
@@ -62,6 +69,7 @@ namespace TaxCalculator.Implementation
                     {
                         if (!response.IsSuccessStatusCode)
                         {
+                            _logger.LogError("API Request Error status code - " + response.StatusCode);                            
                             throw new HttpRequestException("Request failed on status code returned: " + response.StatusCode);
                         }
 
@@ -75,10 +83,19 @@ namespace TaxCalculator.Implementation
             catch (HttpRequestException ex)
             {
                 // log exception
+                _logger.LogError("HttpRequestException in GetTaxRateForLocation - " + ex.Message);
+
+                // return simple exception
+                throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
+                
             }
             catch (Exception ex)
             {
                 // log exception
+                _logger.LogError("General Exception in GetTaxRateForLocation - " + ex.Message);
+
+                // return simple exception
+                throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
             }
             return null;
         }
