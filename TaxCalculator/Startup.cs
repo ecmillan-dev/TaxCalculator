@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using TaxCalculator.Implementation;
+using TaxCalculator.Interface;
 
 namespace TaxCalculator
 {
@@ -32,6 +34,9 @@ namespace TaxCalculator
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TaxCalculator", Version = "v1" });
             });
+
+            // bind interfaces to services
+            services.AddScoped<ITaxJarAdapter, TaxJarAdapterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

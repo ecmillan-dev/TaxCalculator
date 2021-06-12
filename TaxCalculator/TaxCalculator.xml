@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaxCalculator</name>
+    </assembly>
+    <members>
+        <member name="F:TaxCalculator.Controllers.TaxJarAdapterController._taxJarService">
+            <summary>
+            Service for the Tax Jar API methods
+            </summary>
+        </member>
+        <member name="M:TaxCalculator.Controllers.TaxJarAdapterController.#ctor(TaxCalculator.Interface.ITaxJarAdapter)">
+            <summary>
+            Constructor to bind the tax jar service
+            </summary>
+            <param name="taxJarService"></param>
+        </member>
+        <member name="M:TaxCalculator.Controllers.TaxJarAdapterController.GetTaxRateForLocation(System.String)">
+            <summary>
+            Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
+            </summary>
+            <param name="zip">the zip code (5 or 9 digits)</param>
+            <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
+        </member>
+        <member name="F:TaxCalculator.Implementation.TaxJarAdapterService._configuration">
+            <summary>
+            The configuration for app settings access
+            </summary>
+        </member>
+        <member name="P:TaxCalculator.Implementation.TaxJarAdapterService._apiBaseUrl">
+            <summary>
+            Base URL for the API access to the Tax Jar API
+            </summary>
+        </member>
+        <member name="P:TaxCalculator.Implementation.TaxJarAdapterService._authToken">
+            <summary>
+            Authentication token for the Tax Jar API
+            </summary>
+        </member>
+        <member name="M:TaxCalculator.Implementation.TaxJarAdapterService.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Bind the configuration and intialize API variables
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:TaxCalculator.Implementation.TaxJarAdapterService.GetTaxRateForLocation(System.String)">
+            <summary>
+            Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
+            </summary>
+            <param name="zip">the zip code (5 or 9 digits)</param>
+            <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
+        </member>
+        <member name="T:TaxCalculator.Interface.ITaxJarAdapter">
+            <summary>
+            Interface for the Tax Jar API 
+            </summary>
+        </member>
+        <member name="M:TaxCalculator.Interface.ITaxJarAdapter.GetTaxRateForLocation(System.String)">
+            <summary>
+            Retrieves the tax rate model for a zip code location (only accepts 5 digit or 9 digit zip codes)
+            </summary>
+            <param name="zip">the zip code (5 or 9 digits)</param>
+            <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
+        </member>
+        <member name="T:TaxCalculator.Models.GeneralTaxRate">
+            <summary>
+            General Tax rate structure for the Tax Jar API tax rate model
+            </summary>
+        </member>
+        <member name="T:TaxCalculator.Models.TaxRateApiReturn">
+            <summary>
+            Wrapper class for the tax rate class due to return format of the api
+            </summary>
+        </member>
+    </members>
+</doc>
