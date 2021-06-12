@@ -22,6 +22,13 @@
             <param name="zip">the zip code (5 or 9 digits)</param>
             <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
         </member>
+        <member name="M:TaxCalculator.Controllers.TaxJarAdapterController.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
+            <summary>
+            Retrieves the taxes for a specific order from the Tax Jar API
+            </summary>
+            <param name="order">the posted order model with related search information</param>
+            <returns>The order tax information</returns>
+        </member>
         <member name="F:TaxCalculator.Implementation.TaxJarAdapterService._configuration">
             <summary>
             The configuration for app settings access
@@ -55,6 +62,13 @@
             <param name="zip">the zip code (5 or 9 digits)</param>
             <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
         </member>
+        <member name="M:TaxCalculator.Implementation.TaxJarAdapterService.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
+            <summary>
+            Retrieves the taxes for a specific order from the Tax Jar API
+            </summary>
+            <param name="order">the posted order model with related search information</param>
+            <returns>The order tax information</returns>
+        </member>
         <member name="T:TaxCalculator.Interface.ITaxJarAdapter">
             <summary>
             Interface for the Tax Jar API 
@@ -67,9 +81,31 @@
             <param name="zip">the zip code (5 or 9 digits)</param>
             <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
         </member>
+        <member name="M:TaxCalculator.Interface.ITaxJarAdapter.CalculateTaxesForOrder(TaxCalculator.Models.OrderInformation)">
+            <summary>
+            Retrieves the taxes for a specific order from the Tax Jar API
+            </summary>
+            <param name="order">the posted order model with related search information</param>
+            <returns>The order tax information</returns>
+        </member>
         <member name="T:TaxCalculator.Models.GeneralTaxRate">
             <summary>
             General Tax rate structure for the Tax Jar API tax rate model
+            </summary>
+        </member>
+        <member name="T:TaxCalculator.Models.OrderInformation">
+            <summary>
+            The search model to post for an order for calculating taxes for an order 
+            </summary>
+        </member>
+        <member name="T:TaxCalculator.Models.OrderTaxInformation">
+            <summary>
+            Contains the information for taxes for an order in the Tax Jar API
+            </summary>
+        </member>
+        <member name="T:TaxCalculator.Models.OrderTaxInfromationWrapper">
+            <summary>
+            wrapper for the OrderTaxInformation class
             </summary>
         </member>
         <member name="T:TaxCalculator.Models.TaxRateApiReturn">

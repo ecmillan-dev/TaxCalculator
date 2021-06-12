@@ -17,9 +17,12 @@ namespace TaxCalculator.Interface
         /// <param name="zip">the zip code (5 or 9 digits)</param>
         /// <returns>The tax rates (in the Tax Jar rate model) for that location</returns>
         Task<GeneralTaxRate> GetTaxRateForLocation(string zip);
-        /*
-         * Get the Tax rates for a location
-Calculate the taxes for an order
-*/
+
+        /// <summary>
+        /// Retrieves the taxes for a specific order from the Tax Jar API
+        /// </summary>
+        /// <param name="order">the posted order model with related search information</param>
+        /// <returns>The order tax information</returns>
+        Task<OrderTaxInformation> CalculateTaxesForOrder(OrderInformation order);
     }
 }

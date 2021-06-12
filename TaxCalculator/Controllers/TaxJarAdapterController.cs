@@ -60,5 +60,26 @@ namespace TaxCalculator.Controllers
             }
             
         }
+
+        /// <summary>
+        /// Retrieves the taxes for a specific order from the Tax Jar API
+        /// </summary>
+        /// <param name="order">the posted order model with related search information</param>
+        /// <returns>The order tax information</returns>
+        [HttpPost("CalculateTaxesForOrder")]
+        public async Task<ActionResult<OrderTaxInformation>> CalculateTaxesForOrder([FromBody] OrderInformation order)
+        {
+            try
+            {
+                return Ok(await _taxJarService.CalculateTaxesForOrder(order));
+            }
+
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return result;
+            }
+
+        }
     }
 }

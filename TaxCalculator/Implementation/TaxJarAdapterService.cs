@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using TaxCalculator.Interface;
 using TaxCalculator.Models;
@@ -97,7 +98,63 @@ namespace TaxCalculator.Implementation
                 // return simple exception
                 throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
             }
-            return null;
+        }
+
+        /// <summary>
+        /// Retrieves the taxes for a specific order from the Tax Jar API
+        /// </summary>
+        /// <param name="order">the posted order model with related search information</param>
+        /// <returns>The order tax information</returns>
+        public async Task<OrderTaxInformation> CalculateTaxesForOrder(OrderInformation order)
+        {
+            //OrderTaxInfromationWrapper
+            try
+            {
+                // initialize an http client
+                using (var httpClient = new HttpClient())
+                {
+                    // set address and authentication
+                    httpClient.BaseAddress = new Uri(_apiBaseUrl);
+                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _authToken);
+
+                    // serialize the order to add to the request
+                    var orderJson = JsonConvert.SerializeObject(order);
+                    var content = new StringContent(orderJson, Encoding.UTF8, "application/json"); 
+                    // use MediaTypeNames.Application.Json in Core 3.0+ and Standard 2.1+
+
+                    // make the request
+                    using (var response = await httpClient.PostAsync("taxes/", content))
+                    {
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            _logger.LogError("API Request Error status code - " + response.StatusCode);                            
+                            throw new HttpRequestException("Request failed on status code returned: " + response.StatusCode);
+                        }
+
+                        // parse the return if successful
+                        var sResponse = await response.Content.ReadAsStringAsync();
+                        var result = JsonConvert.DeserializeObject<OrderTaxInfromationWrapper>(sResponse);
+                        return result.tax;
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // log exception
+                _logger.LogError("HttpRequestException in CalculateTaxesForOrder - " + ex.Message);
+
+                // return simple exception
+                throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
+
+            }
+            catch (Exception ex)
+            {
+                // log exception
+                _logger.LogError("General Exception in CalculateTaxesForOrder - " + ex.Message);
+
+                // return simple exception
+                throw new Exception("The request encountered an exception (view NLog file for additional details) - " + ex.Message);
+            }
         }
     }
 }
