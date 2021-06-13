@@ -59,9 +59,9 @@
     <Content Include="ProjectInformation.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TaxCalculator\TaxCalculator.csproj">
+    <ProjectReference Include="..\TaxCalculator\TaxCalculator.Api.csproj">
       <Project>{d4f7b43b-a188-4b3b-80dd-03762237ddb8}</Project>
-      <Name>TaxCalculator</Name>
+      <Name>TaxCalculator.Api</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

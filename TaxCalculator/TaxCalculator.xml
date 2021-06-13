@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>TaxCalculator</name>
+        <name>TaxCalculator.Api</name>
     </assembly>
     <members>
         <member name="F:TaxCalculator.Controllers.TaxServiceController._taxService">
