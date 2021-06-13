@@ -16,7 +16,7 @@ namespace TaxCalculator.Test
         private ITaxCalculator taxCalculator;
         private IConfiguration configuration;
         private ITaxService taxService;
-        private Controllers.TaxServiceController taxServiceController;
+
         protected Mock<ITaxService> MockedTaxService => Mock.Get(taxService);
 
         private IServiceProvider ServicesProvider { get; set; }
@@ -31,22 +31,18 @@ namespace TaxCalculator.Test
                 .AddEnvironmentVariables();
             configuration = builder.Build();
             
-            // bind services
+            // bind services with DI of the configuration manager
             taxCalculator = new TaxJarAdapterService(configuration, null);
             taxService = new Implementation.TaxService(taxCalculator, null);
-
-            
-            // Use DI to get instances of IMatchService            
-
-        }
-       
-
-
+        }   
+        /// <summary>
+        /// Tests that calculate taxes for order returns properly from the ITaxService interface
+        /// </summary>
+        /// <returns></returns>
         [Test]
         public async Task TestCalculateTaxesForOrderService()
         {
-            // var taxService2 = ServicesProvider.GetService<ITaxService>();
-
+            // intialize the model
             var model = new Models.OrderInformation()
             {
                 from_country = "US",
@@ -91,11 +87,14 @@ namespace TaxCalculator.Test
             
         }
 
+        /// <summary>
+        /// Tests that calculate taxes for order returns properly from the ITaxCalculator interface
+        /// </summary>
+        /// <returns></returns>
         [Test]
         public async Task TestCalculateTaxesForOrderCalculator()
         {
-            // var taxService2 = ServicesProvider.GetService<ITaxService>();
-
+            // intialize the model
             var model = new Models.OrderInformation()
             {
                 from_country = "US",
