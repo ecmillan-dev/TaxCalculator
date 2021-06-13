@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -8,16 +9,32 @@ namespace TaxCalculator.Test
 {
     public class Tests
     {
-        private TaxService taxService;
+        private ITaxService taxService;
+        protected Mock<ITaxService> MockedTaxService => Mock.Get(taxService);
+
+        private IServiceProvider ServicesProvider { get; set; }
+
         [SetUp]
-        public async void Setup()
+        public void Setup()
         {
-            var calc = new Mock<ITaxCalculator>();
+            var services = new ServiceCollection();
+            services.AddTransient<IMatchRepository, MatchRepositoryStub>();
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            matchRepository = serviceProvider.GetService<IMatchRepository>();
+
+
             //calc.Setup(async c =>
             //{
             //    Models.GeneralTaxRate generalTaxRate = await c.GetTaxRateForLocation("35758");
             //    return generalTaxRate;
             //}).Returns(new System.Threading.Tasks.Task<Models.GeneralTaxRate>());
+        }
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddScoped<ITaxService>();
+            // https://stackoverflow.com/a/67806752
         }
 
         [Test]
@@ -25,13 +42,15 @@ namespace TaxCalculator.Test
         {
             string greeting = "Hello, get-testy.";
             Assert.That(greeting, Is.EqualTo("Hello, get-testy."));
-            Assert.Pass();
             
         }
 
         [Test]
-        public async void TestCalculateTaxesForOrder()
+        public void TestCalculateTaxesForOrder()
         {
+            var calc = new Mock<ITaxCalculator>();
+            calc.0
+            
             var model = new Models.OrderInformation()
             {
                 from_country = "US",
@@ -69,11 +88,16 @@ namespace TaxCalculator.Test
                 discount = 0,
             };
 
+            var value = calc.Setup(c => c.CalculateTaxesForOrder(model).Result).Returns<float>(x => x);
+     //       _mock.Setup(x => x.DoSomething(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())
+     //.Returns((string a, string b, string c) => string.Concat(a, b, c));
+            Assert.AreEqual(value, (float)1.35);
+            //Assert.That(model.from_country, Is.EqualTo("US"));
 
+            // Assert.AreEqual("1725 Slough Avenue", customer.Street);
 
-
-  
-
+            // https://stackoverflow.com/questions/38605935/how-to-mock-a-service-with-moq-and-nunit-in-mvc-application-prevent-nulls
+            // https://stackoverflow.com/questions/37724738/how-to-unit-test-asp-net-core-application-with-constructor-dependency-injection
             // expected result -  "amount_to_collect": 1.35,
         }
     }
