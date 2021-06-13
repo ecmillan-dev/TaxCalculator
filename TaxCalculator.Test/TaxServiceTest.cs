@@ -11,7 +11,7 @@ namespace TaxCalculator.Test
     {
         public Task<float> CalculateTaxesForOrder(OrderInformation order)
         {
-            return Task.Factory.StartNew(() => (float)1.35); 
+            return Task.Factory.StartNew(() => (float)1.43); 
         }
 
         public Task<GeneralTaxRate> GetTaxRateForLocation(string zip)
